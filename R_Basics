@@ -112,3 +112,7 @@ list1=list(u,v);
 list1;
 list1[[2]][2];
 list1[[2]][3] = 25; list1;
+
+
+
+
