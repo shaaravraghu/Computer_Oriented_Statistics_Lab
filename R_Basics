@@ -114,5 +114,31 @@ list1[[2]][2];
 list1[[2]][3] = 25; list1;
 
 
+x = c(12, 13, 5, 7, 16, 6, 9, 7, 11, 4, 14);
+plot(x);
+plot(x, type="l");
+matplot(x,type="b");
+matplot(x,type="c");
+matplot(x,type="o");
+matplot(x,type="h");
+matplot(x,type="s");
+matplot(x,type="S");
 
+barplot(x);
+barplot(x, names.arg=c("a","b","c","d","e","f","g","h","i", "j", "k"));
+barplot(x, names.arg=c("a","b","c","d","e","f","g","h","i", "j", "k"), horiz = TRUE);
 
+D = matrix(c(2,3,1,5,6,8,7,1,3,10,8,7), nrow=3,byrow=T);
+matplot(D,type="l");
+
+barplot(D,beside=TRUE);
+
+names(x) = letters[1:11];
+pie(x,labels=names(x));
+
+title(main="Main Title", sub="Sub-title");
+barplot(x, xlab="X-Label", ylab="Y-Label", main="Main Heading", sub="Sub-Heading", ylim=c(0,10), xlim=c(0,17));
+
+legend(13,10,names(x));
+
+// pch, Ity, las, font, cex, col
