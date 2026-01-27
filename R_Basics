@@ -73,20 +73,20 @@ summary(x);
 ht = c(1.32, 1.41, 1.16, 1.22, 0.95);
 wt = c(45, 56, 77, 62, 85);
 gn = c('M', 'F', 'F', 'M', 'M');
-aa = data.frame(ht,wt,gn);
+aa = data.frame(ht,wt,gn); #parameters become columns
 aa; #creates a matrix of (n samples X m parameters)
 summary(aa);
 
 
-aa[,2];
-aa[3,2];
-aa[3,];
+aa[,2]; #colum selection
+aa[3,2]; #position selection
+aa[3,]; #row selection
 aa[,1];
 aa[aa$wt>65,];
 aa[aa$gn=='M',];
 aa[aa$wt>65&ht>1.22,];
 aa[aa$wt>65|ht>1.22,];
-aa[aa&wt,]
+aa[aa&wt,] #this isn't a selection
 
 # operations: + - / * ** ^ sqrt() exp() log( , base = ) < > == <= >= != & | !
 
@@ -142,3 +142,4 @@ barplot(x, xlab="X-Label", ylab="Y-Label", main="Main Heading", sub="Sub-Heading
 legend(13,10,names(x));
 
 // pch, Ity, las, font, cex, col
+
