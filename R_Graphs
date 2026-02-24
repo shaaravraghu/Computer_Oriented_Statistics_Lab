@@ -30,3 +30,21 @@ hist(x1, probability = TRUE, breaks = 30,
      col = 8, main = "NORMAL(0,1)")       # histogram plot
 lines(s, dnorm(s, mean = 0, sd = 1),
       col = 2, lwd = 3)                   # density curve
+
+
+
+############################
+# Chi-square distribution
+############################
+
+df <- 5      # degrees of freedom
+n <- 1000    # sample size
+
+x1 <- rchisq(n, df = df)                  # generate random sample
+s <- seq(0, max(x1), length = 100)
+
+par(mfrow = c(1,1))
+hist(x1, probability = TRUE, breaks = 30,
+     ylim = c(0, 0.3), main = "Chi-square Distribution")
+lines(s, dchisq(s, df),
+      col = "red", lwd = 2)
