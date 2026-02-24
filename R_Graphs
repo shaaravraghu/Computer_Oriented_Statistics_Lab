@@ -12,3 +12,21 @@ s <- seq(a, b, length=11)
 par(mfrow=c(1,1))
 hist(x1, col=5, probability=TRUE, breaks=s, main="UNIFORM(0,1)")
 lines(s, dunif(s, a, b), col=2, lwd=2, lty=2)
+
+
+############################
+# NORMAL(mu, sigma)
+############################
+
+mu <- 0      # location
+sigma <- 1   # scale
+n <- 1000    # sample size
+
+x1 <- rnorm(n, mu, sigma)                 # generate random sample
+s <- seq(min(x1), max(x1), by = 0.05)     # define a sequence
+
+par(mfrow = c(1,1))                       # divide the plotting area
+hist(x1, probability = TRUE, breaks = 30,
+     col = 8, main = "NORMAL(0,1)")       # histogram plot
+lines(s, dnorm(s, mean = 0, sd = 1),
+      col = 2, lwd = 3)                   # density curve
