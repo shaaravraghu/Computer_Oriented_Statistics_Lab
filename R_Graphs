@@ -1,0 +1,14 @@
+############################################################
+#UNIFORM(A,B)
+############################################################
+
+a <- 0
+b <- 1
+n <- 1000
+
+x1 <- runif(n, a, b)
+s <- seq(a, b, length=11)
+
+par(mfrow=c(1,1))
+hist(x1, col=5, probability=TRUE, breaks=s, main="UNIFORM(0,1)")
+lines(s, dunif(s, a, b), col=2, lwd=2, lty=2)
