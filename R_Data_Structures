@@ -1,0 +1,38 @@
+# VECTORS
+
+# Vector of strings
+fruits <- c("banana", "apple", "orange")
+# Vector of numerical values
+numbers <- c(1, 2, 3)
+# Vector with numerical values in a sequence
+numbers <- 1:10
+# Vector with numerical decimals in a sequence
+numbers1 <- 1.5:6.5
+numbers1 # [1] 1.5 2.5 3.5 4.5 5.5 6.5
+# Vector with numerical decimals in a sequence where the last element is not used
+numbers2 <- 1.5:6.3
+numbers2 # [1] 1.5 2.5 3.5 4.5 5.5
+# Vector of logical values
+log_values <- c(TRUE, FALSE, TRUE, FALSE)
+
+# Vector Length
+length(fruits)
+# Vector Sorting
+sort(numbers)
+# Access the first item (banana)
+fruits[1]
+# Access the first and third item (banana and orange)
+fruits[c(1, 3)]
+# Access all items except for the first item
+fruits[c(-1)]
+# Change an item 
+fruits[1] <- "pear"
+
+# Repeating Vectors
+repeat_each <- rep(c(1,2,3), each = 3)
+repeat_times <- rep(c(1,2,3), times = 3)
+repeat_indepent <- rep(c(1,2,3), times = c(5,2,1))
+
+# Generating Sequenced Vectors
+numbers <- 1:10
+numbers <- seq(from = 0, to = 100, by = 20)
