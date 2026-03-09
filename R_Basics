@@ -1,7 +1,17 @@
+"Hello World!" #doesn't need print statement; also works with print(" ")
+5
 2+2
 2*4*6
 4+(45-(2*3)+(5*4)-(120/5))
 pi #returns value of pi
+
+name <- "John"
+age <- 40
+age
+name
+print(name)
+print(age)
+# all provide the same output
 
 2*5*(6+9-3)
 120-(8/5+(28*4))+(5+7)
@@ -14,6 +24,82 @@ pi*5**2
 
 x=5; 5*(x**2) + 2*x + 3
 x=5; y=2; x^2 + 5*x*y -2*(y**3); 2*(x**2.3) - sqrt(x*y) + y;
+
+text1 <- "R is"
+text2 <- "awesome"
+paste(text1, text2) # automatically provides space between text1 and text2 
+
+num1 <- 5
+num2 <- 10
+num1 + num2
+
+num <- 5
+text <- "Some text"
+num + text # Error (different datatypes)
+
+var1 <- var2 <- var3 <- "Orange"
+var1
+var2
+var3
+
+# Legal variable names:
+myvar <- "John"
+my_var <- "John"
+myVar <- "John"
+MYVAR <- "John"
+myvar2 <- "John"
+.myvar <- "John"
+
+# Illegal variable names:
+2myvar <- "John"
+my-var <- "John"
+my var <- "John"
+_my_var <- "John"
+my_v@ar <- "John"
+TRUE <- "John"
+
+# A variable name must start with a letter and can be a combination of letters, digits, period(.)
+and underscore(_). If it starts with period(.), it cannot be followed by a digit.
+# A variable name cannot start with a number or underscore (_)
+# Variable names are case-sensitive (age, Age and AGE are three different variables)
+# Reserved words cannot be used as variables (TRUE, FALSE, NULL, if...)
+
+# Data Types
+# numeric - (10.5, 55, 787) numbers with/ without decimals
+# integer - (1L, 55L, 100L, where the letter "L" declares this as an integer) without decimals
+# complex - (9 + 3i, where "i" is the imaginary part)
+# character (a.k.a. string) - ("k", "R is exciting", "FALSE", "11.5")
+# logical (a.k.a. boolean) - (TRUE or FALSE)
+
+# Built-in Math Module:
+max (5, 10, 15)
+min (5, 10, 15)
+sqrt(25)
+abs(-4.7) #4.7
+ceiling(1.4)
+floor(1.4)
+
+str <- "hello 
+hello"
+str # hello /nhello
+cat(str) # hello 
+#hello
+
+# Escape Sequences: \' \" \\ \r \t \n \b
+
+# Boolean Values: TRUE, FALSE, T, F
+
+# Arithmetic Operators:
++ - * / ^ %% (remainder) %/% (quotient)
+
+# Comparison Operator:
+== != < > <= >=
+
+# Logical Operators:
+| (element-wise OR) || (expression-wise OR) & (element-wise AND) && (expression-wise AND) ! (NOT)
+
+# Miscellaneous Operator:
+: (sequence creation) %in% (check if an element belongs to a vector) %*% (matrix multiplication)
 
 # c refers to a vector and can taken any values like numeric, string/ character (in single/ double quotes)
 Weight=c(60,72,10); Weight; z= Weight*Weight; z; # self operation on elements
@@ -142,6 +228,7 @@ barplot(x, xlab="X-Label", ylab="Y-Label", main="Main Heading", sub="Sub-Heading
 legend(13,10,names(x));
 
 // pch, Ity, las, font, cex, col
+
 
 
 
