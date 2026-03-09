@@ -147,3 +147,54 @@ Matrix_Combined <- cbind(Matrix1, Matrix2)
 
 
 
+
+# ARRAY
+
+# Unlike matrices, arrays can take dimensions more than 2
+# Creating a sequence for an array
+thisarray <- c(1:24)
+# Creating a multi-dimensional array
+multiarray <- array(thisarray, dim = c(4, 3, 2))
+multiarray
+# , , 1
+#     [,1] [,2] [,3]
+#[1,]    1    5    9
+#[2,]    2    6   10
+#[3,]    3    7   11
+#[4,]    4    8   12
+# , , 2
+#     [,1] [,2] [,3]
+#[1,]   13   17   21
+#[2,]   14   18   22
+#[3,]   15   19   23
+#[4,]   16   20   24
+
+# Accessing elements as usual
+# Accessing whole row/ column/ matrix level
+multiarray[c(1),,]
+multiarray[,c(1),1]
+
+# %in%, dim(), length() as usual
+
+# loop
+for(x in multiarray){
+  print(x)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
