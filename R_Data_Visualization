@@ -87,3 +87,39 @@ pie(x, label = mylabel, main = "Fruits", col = colors) # Display the pie chart w
 
 legend("bottomright", mylabel, fill = colors) # displays legend (center, bottomleft, top, topright etc.)
 
+
+
+
+
+
+
+
+
+
+
+
+# BAR PLOT
+
+x <- c("A", "B", "C", "D") # x-axis values
+y <- c(2, 4, 6, 8) # y-axis values
+barplot(y, names.arg = x)
+
+barplot(y, names.arg = x, col = "red")
+
+barplot(y, names.arg = x, density = 10)
+
+barplot(y, names.arg = x, width = c(1,2,3,4))
+
+barplot(y, names.arg = x, horiz = TRUE)
+
+
+
+
+
+
+
+
+
+
+
+
