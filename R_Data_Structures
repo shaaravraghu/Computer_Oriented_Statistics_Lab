@@ -36,3 +36,65 @@ repeat_indepent <- rep(c(1,2,3), times = c(5,2,1))
 # Generating Sequenced Vectors
 numbers <- 1:10
 numbers <- seq(from = 0, to = 100, by = 20)
+
+
+
+
+
+
+
+
+
+
+
+
+# LISTS
+
+# Can take multiple data types
+thislist <- list("apple", "banana", "cherry", 23L, 2.3)
+# same method to access, update, and check length as vectors
+# check if item exists
+"apple" %in% thislist
+# Append item
+append(thislist, "orange")
+append(thislist, "orange", after = 2)
+# Remove item
+thislist <- list("apple", "banana", "cherry")
+newlist <- thislist[-1]
+# Range through indices
+(thislist)[2:5]
+# Loop through a list
+for (x in thislist) {
+  print(x)
+}
+# Join two lists
+list1 <- list("a", "b", "c")
+list2 <- list(1,2,3)
+list3 <- c(list1,list2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
