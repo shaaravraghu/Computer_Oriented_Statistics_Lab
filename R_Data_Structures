@@ -98,3 +98,52 @@ list3 <- c(list1,list2)
 
 
 
+# MATRICES
+
+# Create a matrix (gets filled top-bottom)
+thismatrix <- matrix(c(1,2,3,4,5,6), nrow = 3, ncol = 2)
+thismatrix <- matrix(c("apple", "banana", "cherry", "orange"), nrow = 2, ncol = 2)
+
+# Access Element (row, column)
+thismatrix[1, 2]
+# Access Row
+thismatrix[2, ]
+# Access Column
+thismatrix[, 2]
+# Access Multiple Rows
+thismatrix[c(1, 2), ]
+# Access Multiple Columns
+thismatrix[, c(1, 2)]
+
+thismatrix <- matrix(c("apple", "banana", "cherry", "orange","grape", "pineapple", "pear", "melon", "fig"), nrow = 3, ncol = 3)
+# Add column
+newmatrix <- cbind(thismatrix, c("strawberry", "blueberry", "raspberry"))
+# Add row
+newmatrix <- rbind(thismatrix, c("strawberry", "blueberry", "raspberry"))
+
+# Remove rows and columns (independently also)
+# Remove the first row and the first column
+thismatrix <- thismatrix[-c(1), -c(1)]
+
+# Other features
+"apple" %in% thismatrix
+dim(thismatrix) # returns dimension
+length(thismatrix)
+
+# Loop through a matrix
+for (rows in 1:nrow(thismatrix)) {
+  for (columns in 1:ncol(thismatrix)) {
+    print(thismatrix[rows, columns])
+  }
+}
+
+# Combine 2 matrices
+Matrix_Combined <- rbind(Matrix1, Matrix2)
+Matrix_Combined <- cbind(Matrix1, Matrix2)
+
+
+
+
+
+
+
