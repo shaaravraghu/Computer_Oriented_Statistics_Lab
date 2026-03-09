@@ -23,6 +23,40 @@ plot(1:10, pch=25, cex=2) # type of data point
 
 
 
+# R LINE
+
+plot(1:10, type="l")
+plot(1:10, type="l", col="blue")
+plot(1:10, type="l", lwd=2) # line width
+plot(1:10, type="l", lwd=5, lty=3) # line styles
+
+# multiple lines
+line1 <- c(1,2,3,4,5,10)
+line2 <- c(2,5,7,8,9,10)
+plot(line1, type = "l", col = "blue")
+lines(line2, type="l", col = "red")
+
+
+
+
+
+
+
+
+
+
+
+
+
+# R Scatterplot
+
+# multiple plots
+x1 <- c(5,7,8,7,2,2,9,4,11,12,9,6)
+y1 <- c(99,86,87,88,111,103,87,94,78,77,85,86)
+x2 <- c(2,2,8,1,15,8,12,9,7,3,11,4,7,14,12)
+y2 <- c(100,105,84,105,90,99,90,95,94,100,79,112,91,80,85)
+plot(x1, y1, main="Observation of Cars", xlab="Car age", ylab="Car speed", col="red", cex=2)
+points(x2, y2, col="blue", cex=2)
 
 
 
@@ -39,17 +73,17 @@ plot(1:10, pch=25, cex=2) # type of data point
 
 
 
+# PIE CHART
 
+x <- c(10,20,30,40)
+pie(x) # splits as percentage wise of total
+pie(x, init.angle = 90) # setting up start angle
 
+mylabel <- c("Apples", "Bananas", "Cherries", "Dates")
+pie(x, label = mylabel, main = "Fruits") # Display the pie chart with labels
 
+colors <- c("blue", "yellow", "green", "black")
+pie(x, label = mylabel, main = "Fruits", col = colors) # Display the pie chart with colors
 
-
-
-
-
-
-
-
-
-
+legend("bottomright", mylabel, fill = colors) # displays legend (center, bottomleft, top, topright etc.)
 
