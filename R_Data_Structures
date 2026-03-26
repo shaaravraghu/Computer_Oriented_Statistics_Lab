@@ -200,3 +200,53 @@ for(x in multiarray){
 
 # DATAFRAMES
 # FACTOR
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# FUNCTION
+# Defining a Function
+function_name <- function(arguments) {
+    # body
+    return(value)   # optional — R returns last evaluated expression
+}
+# Default Arguments
+greet <- function(name, greeting = "Hello") {
+    paste(greeting, name)
+}
+# Multiple Return Values
+stats <- function(x) {
+    list(mean = mean(x),
+         sd   = sd(x),
+         n    = length(x))
+}
+# Variable Number of Arguments
+my_sum <- function(...) {
+    sum(...)
+}
+# Recursive Functions
+factorial <- function(n) {
+    if (n == 0) return(1)
+    n * factorial(n - 1)
+}
+# Anonymous Functions
+sapply(1:5, function(x) x^2)
