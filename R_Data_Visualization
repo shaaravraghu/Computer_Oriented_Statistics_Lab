@@ -164,3 +164,9 @@ barplot(x, beside = TRUE)
 barplot(x, names.arg = c())
 # COLORS
 barplot(x, col = c("steelblue", "tomato"))
+# SHAPE PLOT CHARACTER: pch = 1-24
+# LINE TYPE: lty = 1-6
+# LABEL AXIS STYLE: las = 0-3
+# FONT STYLE: font/ font.main/ font.axis/ font.lab = 1-4
+# PLOT CHARACTER SIZE: cex/ cex.main/ cex.lab/ cex.axis = 1.5 (X increase in size)
+# COLOR: col/ col.main/ col.axis/ col.lab = int/ ''
