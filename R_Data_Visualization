@@ -170,3 +170,48 @@ barplot(x, col = c("steelblue", "tomato"))
 # FONT STYLE: font/ font.main/ font.axis/ font.lab = 1-4
 # PLOT CHARACTER SIZE: cex/ cex.main/ cex.lab/ cex.axis = 1.5 (X increase in size)
 # COLOR: col/ col.main/ col.axis/ col.lab = int/ ''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# CONTINUOUS VARIABLES
+
+# HISTOGRAM: hist(x)
+# BOX PLOT: boxplot(x)
+# MATRIX PLOT: matplot(x)
+
+# FREQUENCY
+
+# FREQUENCY: freq <- table(x)
+# GREATER THAN TYPE CUMULATIVE FREQUENCY: cumsum(rev(freq)) (OR) sum(freq) - cumsum(freq) + freq
+# LESSER THAN TYPE CUMULATIVE FREQUENCY: cumsum(freq)
+
+# BIVARIATE DATA
+plot(x, y)
+cov(x, y)
+cor(x, y)
+
