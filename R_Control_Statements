@@ -44,6 +44,14 @@ for (x in adj) {
   }
 }
 
+# REPEAT LOOPS
+repeat{
+  if(){
+    break
+  }
+}
+
+
 # Functions and call
 my_function <- function() { # create a function with the name my_function
   print("Hello World!")
