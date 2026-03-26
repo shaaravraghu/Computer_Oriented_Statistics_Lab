@@ -1,3 +1,76 @@
+# Prefix Conventions
+r: random samples
+d: density
+p: probability
+q: quantile
+
+# Various Distributions
+
+# Normal: Parameters (Location = mean, Scale = sd)
+rnorm(n, mean = 0, sd = 1)
+
+# Uniform: Parameters (min, max)
+runif(n, min = 0, max = 1)
+
+# Binomial: Parameters (size: no of trials per experiment, prob: probability of success per trial)
+rbinom(n, size, prob)
+
+# Poisson: Parameters (rate = lambda)
+rpois(n, lambda)
+
+# Exponential: Parameters (rate = 1/ mean)
+rexp(n, rate = 1)
+
+# Gamma: Parameters (shape, rate)
+rgamma(n, shape, rate = 1)
+
+# Beta: Parameters (shape1, shape2)
+rbeta(n, shape1, shape2)
+
+# Chi-Square: Parameters (df, ncp)
+rchisq(n, df, ncp = 0)
+
+# Student t
+rt(n, df)
+
+# F
+rf(n, df1, df2)
+
+# Geometric
+rgeom(n, prob)
+
+# Negative Binomial
+rnbinom(n, size, prob)
+
+# Log Normal
+rlnorm(n, meanlog = 0, sdlog = 1)
+
+# Cauchy
+rcauchy(n, location = 0, scale = 1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ############################################################
 #UNIFORM(A,B)
 ############################################################
