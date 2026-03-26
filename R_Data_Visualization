@@ -123,3 +123,44 @@ barplot(y, names.arg = x, horiz = TRUE)
 
 
 
+# MULTIPLE LINE DIAGRAM
+matplot(x, type = "l")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# MORE ABOUT DATA VISUALISATION
+# TITLES
+title(main = " ", sub = " ")
+# LABEL OF AXES
+plot(x, xlab = '', ylab = ' ')
+# LIMIT ODF AXES
+barplot(x, xlim = c(1, 5), ylim = c(0, 100))
+# CREATING LEGEND
+barplot(x, legend = TRUE)
+barplot(x, legend.text = c())
+# BESIDE
+barplot(x, beside = TRUE)
+# NAMING BARS
+barplot(x, names.arg = c())
+# COLORS
+barplot(x, col = c("steelblue", "tomato"))
