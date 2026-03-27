@@ -1,0 +1,249 @@
+# Scatterplot
+# Basic scatterplot
+plot(x, y,
+     main = "Scatterplot",
+     xlab = "X Variable",
+     ylab = "Y Variable",
+     col  = "steelblue",
+     pch  = 16,
+     cex  = 1.2)
+
+# Add a trend line
+abline(lm(y ~ x), col = "red", lty = 2, lwd = 2)
+
+# Add correlation text
+r <- cor(x, y)
+legend("topleft", legend = paste("r =", round(r, 3)))
+
+# Scatterplot Matrix
+# Base R
+pairs(df,
+      col  = "steelblue",
+      pch  = 16,
+      main = "Scatterplot Matrix")
+
+# With correlation values
+pairs(df, panel = function(x, y) {
+    points(x, y, col = "steelblue", pch = 16)
+    abline(lm(y ~ x), col = "red")
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Simple Linear Regression: Y = β₀ + β₁X + ε
+# Fit model
+model <- lm(y ~ x, data = df)
+
+# Summary — most important output
+summary(model)
+
+# Output explained:
+# Coefficients:
+#             Estimate Std. Error t value Pr(>|t|)
+# (Intercept)   2.345      0.412    5.69  < 0.001 ***
+# x             1.234      0.087   14.18  < 0.001 ***
+#
+# Residual standard error: 1.23
+# Multiple R-squared:  0.874
+# Adjusted R-squared:  0.871
+# F-statistic: 201.1, p-value: < 0.001
+
+# Extracting Components
+model$coefficients       # β₀ and β₁
+model$residuals          # residuals (y - ŷ)
+model$fitted.values      # predicted ŷ values
+
+coef(model)              # same as $coefficients
+fitted(model)            # same as $fitted.values
+residuals(model)         # same as $residuals
+
+confint(model)           # 95% CI for coefficients
+confint(model, level = 0.99)  # 99% CI
+
+# Prediction
+# Predict for new data
+new_data <- data.frame(x = c(10, 20, 30))
+predict(model, newdata = new_data)
+
+# With confidence interval (for mean response)
+predict(model, newdata = new_data, interval = "confidence")
+
+# With prediction interval (for individual response)
+predict(model, newdata = new_data, interval = "prediction")
+
+#      fit      lwr      upr
+# 1  14.68    12.34    17.02   ← prediction interval wider than CI
+
+# Plotting the Fit
+plot(x, y, pch = 16, col = "steelblue")
+abline(model, col = "red", lwd = 2)    # regression line
+
+# Add CI band
+x_seq <- seq(min(x), max(x), length = 100)
+ci <- predict(model,
+              newdata  = data.frame(x = x_seq),
+              interval = "confidence")
+
+lines(x_seq, ci[,"lwr"], col = "red", lty = 2)
+lines(x_seq, ci[,"upr"], col = "red", lty = 2)
+
+# Diagnostic Plots
+par(mfrow = c(2, 2))   # 2×2 grid
+plot(model)
+
+# Plot 1: Residuals vs Fitted   → checks linearity
+# Plot 2: Normal Q-Q            → checks normality of residuals
+# Plot 3: Scale-Location        → checks homoscedasticity
+# Plot 4: Residuals vs Leverage → checks influential points
+par(mfrow = c(1, 1))   # reset
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Polynomial Regression: Model: Y = β₀ + β₁X + β₂X² + ... + βₙXⁿ + ε
+# Quadratic (degree 2)
+model2 <- lm(y ~ x + I(x^2), data = df)
+
+# Cubic (degree 3)
+model3 <- lm(y ~ x + I(x^2) + I(x^3), data = df)
+
+# Using poly() — cleaner, handles multicollinearity better
+model_p <- lm(y ~ poly(x, degree = 3), data = df)
+# degree = 2 → quadratic
+# degree = 3 → cubic
+
+# raw = TRUE gives actual x, x², x³ (not orthogonal)
+model_raw <- lm(y ~ poly(x, 3, raw = TRUE), data = df)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Logistic Regression: Used when Y is binary (0/1)
+Model: log(p / 1-p) = β₀ + β₁X₁ + ...
+# Fit logistic regression
+model <- glm(y ~ x1 + x2 + x3,
+             data   = df,
+             family = binomial)    # key argument!
+
+summary(model)
+# Coefficients are on LOG-ODDS scale
+# Extracting Info
+coef(model)              # log-odds coefficients
+exp(coef(model))         # ODDS RATIOS (more interpretable)
+confint(model)           # CI on log-odds scale
+exp(confint(model))      # CI on odds ratio scale
+# Interpreting coefficients
+# If β₁ = 0.5:
+exp(0.5)   # = 1.65
+# → One unit increase in x1 multiplies odds by 1.65 (65% increase)
+
+# If β₁ = -0.3:
+exp(-0.3)  # = 0.74
+# → One unit increase in x1 multiplies odds by 0.74 (26% decrease)
+# Predicting Probabilities
+# Predict probabilities (not log-odds)
+predict(model, type = "response")              # on training data
+predict(model, newdata = new_df, type = "response")  # on new data
+
+# type = "response"  → probabilities [0,1]
+# type = "link"      → log-odds (default)
+# Classification
+probs <- predict(model, type = "response")
+
+# Convert probabilities to classes with threshold 0.5
+predicted_class <- ifelse(probs > 0.5, 1, 0)
+
+# Confusion matrix
+table(Predicted = predicted_class, Actual = df$y)
+#          Actual
+# Predicted  0  1
+#         0 40  5
+#         1  8 47
+
+# Accuracy
+mean(predicted_class == df$y)
+# Plotting Logistic Curve
+# Single predictor case
+plot(x, y, pch = 16,
+     col  = ifelse(y == 1, "steelblue", "tomato"),
+     main = "Logistic Regression")
+
+x_seq <- seq(min(x), max(x), length = 200)
+y_prob <- predict(model,
+                  newdata = data.frame(x = x_seq),
+                  type    = "response")
+
+lines(x_seq, y_prob, col = "black", lwd = 2)
+abline(h = 0.5, lty = 2, col = "gray")   # decision boundary
+# Model fit
+# Null deviance vs Residual deviance
+summary(model)$null.deviance       # deviance with only intercept
+summary(model)$deviance            # deviance of fitted model
+
+# Pseudo R² (McFadden's)
+1 - (model$deviance / model$null.deviance)
+# > 0.2 is generally considered good fit
+
+
+
+
