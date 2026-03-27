@@ -247,3 +247,265 @@ summary(model)$deviance            # deviance of fitted model
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# ============================================================
+#         ANALYSIS OF VARIANCE — 1-WAY & 2-WAY LAYOUT
+# ============================================================
+
+
+# ============================================================
+# 1. ONE-WAY ANOVA
+# ============================================================
+# Tests if means of 3+ groups are equal
+# H0: μ1 = μ2 = μ3 = ...
+# H1: At least one mean is different
+# Assumes: normality, equal variances, independence
+
+# --- Data Setup ---
+group1 <- c(85, 90, 88, 92, 87)
+group2 <- c(78, 82, 79, 81, 80)
+group3 <- c(90, 95, 92, 94, 91)
+
+# Long format (required for aov)
+scores <- c(group1, group2, group3)
+groups <- factor(rep(c("A", "B", "C"), each = 5))
+df     <- data.frame(scores, groups)
+
+# --- Fit One-Way ANOVA ---
+model1 <- aov(scores ~ groups, data = df)
+summary(model1)
+
+# Output:
+#           Df Sum Sq Mean Sq F value   Pr(>F)
+# groups     2  432.1   216.0   54.32  < 0.001 ***
+# Residuals 12   47.7     3.98
+
+# Reading the output:
+# Df        → degrees of freedom (groups: k-1, residuals: N-k)
+# Sum Sq    → Sum of Squares
+# Mean Sq   → Sum Sq / Df
+# F value   → Mean Sq (groups) / Mean Sq (residuals)
+# Pr(>F)    → p-value → if < 0.05, reject H0
+
+
+# --- Extract Components ---
+summary(model1)[[1]]$"F value"    # F statistic
+summary(model1)[[1]]$"Pr(>F)"     # p-value
+
+
+# --- Check Assumptions ---
+
+# 1. Normality of residuals — Shapiro-Wilk test
+shapiro.test(residuals(model1))
+# H0: residuals are normal → p > 0.05 means OK
+
+# 2. Homogeneity of variances — Bartlett's test (assumes normality)
+bartlett.test(scores ~ groups, data = df)
+# H0: variances are equal → p > 0.05 means OK
+
+# 3. Homogeneity of variances — Levene's test (more robust)
+# install.packages("car")
+library(car)
+leveneTest(scores ~ groups, data = df)
+# H0: variances are equal → p > 0.05 means OK
+
+
+# --- Post-Hoc Tests (if ANOVA is significant) ---
+# ANOVA only tells you THAT groups differ, not WHICH ones
+
+# Tukey HSD — most common, controls family-wise error rate
+TukeyHSD(model1)
+# Output:
+#       diff    lwr    upr  p adj
+# B-A  -8.2  -10.5  -5.9  0.000   ← A and B differ
+# C-A   4.6    2.3   6.9  0.001   ← A and C differ
+# C-B  12.8   10.5  15.1  0.000   ← B and C differ
+
+# Plot Tukey results
+plot(TukeyHSD(model1))
+
+# Pairwise t-tests with Bonferroni correction
+pairwise.t.test(scores, groups, p.adjust.method = "bonferroni")
+# Other methods: "holm", "BH", "fdr", "none"
+
+
+# --- Visualizing One-Way ANOVA ---
+
+# Boxplot by group
+boxplot(scores ~ groups, data = df,
+        col  = c("steelblue", "tomato", "seagreen"),
+        main = "One-Way ANOVA — Group Comparison",
+        xlab = "Group",
+        ylab = "Score")
+
+# Group means plot
+means <- tapply(scores, groups, mean)
+barplot(means,
+        col  = c("steelblue", "tomato", "seagreen"),
+        main = "Group Means",
+        ylab = "Mean Score",
+        ylim = c(0, max(means) * 1.2))
+
+
+# --- Non-Parametric Alternative (if assumptions violated) ---
+# Kruskal-Wallis test
+kruskal.test(scores ~ groups, data = df)
+# H0: distributions are equal across groups
+
+
+# ============================================================
+# 2. TWO-WAY ANOVA
+# ============================================================
+# Tests effect of TWO factors (and their interaction) on response
+# H0 (Factor A):      all levels of A have same mean
+# H0 (Factor B):      all levels of B have same mean
+# H0 (Interaction):   effect of A doesn't depend on B (and vice versa)
+
+# --- Data Setup ---
+score    <- c(85,90,88,78,82,80,90,95,92,
+              87,91,89,79,83,81,91,96,93)
+
+method   <- factor(rep(c("M1","M2","M3"), times = 6))
+gender   <- factor(rep(c("Male","Female"), each = 9))
+
+df2 <- data.frame(score, method, gender)
+
+# --- Fit Two-Way ANOVA ---
+
+# Without interaction
+model2a <- aov(score ~ method + gender, data = df2)
+summary(model2a)
+
+# With interaction (RECOMMENDED — always check interaction first)
+model2b <- aov(score ~ method * gender, data = df2)
+summary(model2b)
+
+# method * gender expands to: method + gender + method:gender
+
+# Output:
+#                Df Sum Sq Mean Sq F value   Pr(>F)
+# method          2  432.1   216.0   54.32  < 0.001 ***
+# gender          1   18.2    18.2    4.58   0.047  *
+# method:gender   2    5.4     2.7    0.68   0.521       ← interaction NS
+# Residuals      12   47.7     3.98
+
+# Reading:
+# method        → main effect of teaching method significant
+# gender        → main effect of gender significant
+# method:gender → interaction NOT significant (p=0.521)
+#                 meaning effect of method is same for both genders
+
+
+# --- Interaction Plot ---
+# Most important plot for Two-Way ANOVA
+interaction.plot(x.factor     = df2$method,
+                 trace.factor  = df2$gender,
+                 response      = df2$score,
+                 type          = "o",
+                 col           = c("steelblue", "tomato"),
+                 pch           = c(16, 17),
+                 lwd           = 2,
+                 main          = "Interaction Plot",
+                 xlab          = "Method",
+                 ylab          = "Mean Score",
+                 trace.label   = "Gender")
+
+# Interpreting interaction plot:
+# Lines PARALLEL   → NO interaction (effect of A same across B)
+# Lines CROSS/DIVERGE → INTERACTION exists (effect of A depends on B)
+
+
+# --- Post-Hoc for Two-Way ANOVA ---
+# Only do post-hoc for significant main effects
+# If interaction is significant → interpret interaction, not main effects
+
+# Tukey for main effects
+TukeyHSD(model2b, which = "method")   # post-hoc for method only
+TukeyHSD(model2b, which = "gender")   # post-hoc for gender only
+TukeyHSD(model2b)                     # post-hoc for all
+
+
+# --- Check Assumptions ---
+shapiro.test(residuals(model2b))          # normality
+bartlett.test(score ~ interaction(method, gender), data = df2)  # equal variances
+plot(model2b)                             # diagnostic plots
+
+
+# --- Visualizing Two-Way ANOVA ---
+
+# Boxplot for each combination
+boxplot(score ~ method * gender, data = df2,
+        col  = c("steelblue","steelblue","steelblue",
+                 "tomato","tomato","tomato"),
+        main = "Two-Way ANOVA",
+        xlab = "Method × Gender",
+        ylab = "Score",
+        las  = 2)
+
+# Cell means (all combinations)
+tapply(df2$score, list(df2$method, df2$gender), mean)
+
+
+# ============================================================
+# QUICK COMPARISON — 1-WAY vs 2-WAY
+# ============================================================
+
+# One-Way:
+# aov(y ~ A)                       → 1 factor
+# TukeyHSD(model)                  → post-hoc
+
+# Two-Way without interaction:
+# aov(y ~ A + B)                   → 2 factors, no interaction
+
+# Two-Way with interaction:
+# aov(y ~ A * B)                   → 2 factors + interaction
+# aov(y ~ A + B + A:B)             → same as above
+
+# ============================================================
+# DECISION GUIDE
+# ============================================================
+
+# Step 1: Run aov(y ~ A * B) — always include interaction first
+# Step 2: Check interaction p-value
+#   Interaction significant?
+#     YES → interpret interaction (use interaction.plot)
+#           post-hoc on combined groups
+#     NO  → interpret main effects separately
+#           post-hoc on each factor with TukeyHSD
+# Step 3: Check assumptions
+#   Normality violated?    → Kruskal-Wallis (1-way only)
+#   Equal variance failed? → Welch's ANOVA: oneway.test(y~A, var.equal=FALSE)
+
+# ============================================================
+# EXTRA: WELCH'S ANOVA (if variances unequal)
+# ============================================================
+oneway.test(scores ~ groups, data = df, var.equal = FALSE)
+# Games-Howell post-hoc (install.packages("rstatix"))
+library(rstatix)
+games_howell_test(df, scores ~ groups)
+
