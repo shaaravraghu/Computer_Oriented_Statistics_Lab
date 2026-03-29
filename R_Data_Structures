@@ -199,7 +199,82 @@ for(x in multiarray){
 
 
 # DATAFRAMES
-# FACTOR
+# Create a data frame
+df <- data.frame(
+  Name = c("Alice", "Bob", "Charlie"),
+  Age = c(25, 30, 35),
+  Score = c(88.5, 92.0, 78.3),
+  Passed = c(TRUE, TRUE, FALSE)
+)
+
+# Summary and structure
+print(df)
+summary(df)
+str(df)
+
+# Dimensions
+nrow(df)       # number of rows
+ncol(df)       # number of columns
+dim(df)        # both dimensions
+length(df)     # number of columns
+
+# Access a column (returns a vector)
+df$Name
+df[["Age"]]
+df[, "Score"]
+
+# Access a row
+df[1, ]
+
+# Access a specific element (row, col)
+df[2, 3]
+
+# Access multiple rows
+df[c(1, 2), ]
+
+# Access multiple columns
+df[, c("Name", "Age")]
+
+# Add a new column
+df$Grade <- c("B", "A", "C")
+
+# Update a value
+df[1, "Age"] <- 26
+
+# Remove a column
+df$Grade <- NULL
+
+# Remove a row
+df <- df[-2, ]
+
+# Check if value exists in a column
+"Alice" %in% df$Name
+
+# Filter rows based on condition
+df[df$Age > 25, ]
+df[df$Passed == TRUE, ]
+
+# Add a new row
+new_row <- data.frame(Name = "Diana", Age = 28, Score = 95.0, Passed = TRUE)
+df <- rbind(df, new_row)
+
+# Combine two data frames (same columns)
+df1 <- data.frame(Name = c("Alice"), Age = c(25))
+df2 <- data.frame(Name = c("Bob"), Age = c(30))
+df_combined <- rbind(df1, df2)
+
+# Combine two data frames side by side (same rows)
+df3 <- data.frame(Score = c(88.5, 92.0))
+df_wide <- cbind(df1, df3)
+
+# Loop through rows
+for (i in 1:nrow(df)) {
+  print(df[i, ])
+}
+
+# Loop through columns
+for (col in names(df)) {
+  print(df[[col]])
 
 
 
