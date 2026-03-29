@@ -298,6 +298,156 @@ for (col in names(df)) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# FACTORS
+# Factors are used for categorical data (stores unique levels)
+
+# Create a factor
+sizes <- factor(c("small", "medium", "large", "medium", "small"))
+sizes
+# [1] small  medium large  medium small
+# Levels: large medium small
+
+# Levels are auto-sorted alphabetically
+levels(sizes)       # [1] "large"  "medium" "small"
+nlevels(sizes)      # [1] 3
+length(sizes)       # [1] 5
+
+# Define levels manually (controls order)
+sizes <- factor(c("small", "medium", "large", "medium", "small"),
+                levels = c("small", "medium", "large"))
+levels(sizes)       # [1] "small"  "medium" "large"
+
+# Access elements like a vector
+sizes[1]            # small
+sizes[c(1, 3)]      # small large
+
+# Update an element (must be an existing level)
+sizes[1] <- "large"
+
+# Check if value is in factor
+"medium" %in% sizes
+
+# Ordered factor (ranked categories)
+rating <- factor(c("low", "high", "medium", "high"),
+                 levels = c("low", "medium", "high"),
+                 ordered = TRUE)
+rating
+# [1] low    high   medium high
+# Levels: low < medium < high
+
+# Comparison works on ordered factors
+rating[1] < rating[2]   # TRUE (low < high)
+
+# Table of frequency counts
+table(sizes)
+# sizes
+# small  medium   large
+#     1       2       2
+
+# Loop through a factor
+for (x in sizes) {
+  print(x)
+}
+
+# Convert factor to character or numeric
+as.character(sizes)
+as.numeric(sizes)   # returns internal level codes (1, 2, 3...)
+
+# Drop unused levels
+sizes <- sizes[sizes != "large"]
+sizes <- droplevels(sizes)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # FUNCTION
 # Defining a Function
 function_name <- function(arguments) {
