@@ -475,3 +475,26 @@ factorial <- function(n) {
 }
 # Anonymous Functions
 sapply(1:5, function(x) x^2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
