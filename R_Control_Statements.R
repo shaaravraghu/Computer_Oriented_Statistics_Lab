@@ -211,14 +211,3 @@ sapply(nums, range)
 # [1,] 1  5   9    ← min
 # [2,] 4  8  12    ← max
 # → Returns a MATRIX when result has length > 1
-
-
-
-
-
-
-
-
-
-
-
