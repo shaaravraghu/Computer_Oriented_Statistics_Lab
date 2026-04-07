@@ -228,24 +228,3 @@ barplot(x, xlab="X-Label", ylab="Y-Label", main="Main Heading", sub="Sub-Heading
 legend(13,10,names(x));
 
 // pch, Ity, las, font, cex, col
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
