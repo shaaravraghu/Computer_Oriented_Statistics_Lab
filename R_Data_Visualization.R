@@ -215,3 +215,10 @@ plot(x, y)
 cov(x, y)
 cor(x, y)
 
+
+
+
+
+
+
+
