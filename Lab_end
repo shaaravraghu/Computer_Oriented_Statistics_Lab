@@ -1,0 +1,106 @@
+#1
+
+set.seed(123)
+n = 1000
+par(mfrow = c(1,3))
+dfs= c(2, 10, 30)
+for(df in dfs){
+	x = rchisq(n, df = df)
+	s = seq(0, 100, length = 20)
+	hist(x, probabilty = TRUE, breaks = 50, main = "T - Dist.")
+	lines(s, dchisq(s, df = df), col = "red")
+	lines(s, dnorm(s, mean = 6, sd = 1))
+}
+
+
+
+
+
+
+
+
+
+#2(a)
+
+pnorm(28, mean = 20, sd = 4) - pnorm(12, mean = 20, sd = 4)
+x = rnorm(60, mean = 20, sd = 4)
+mean(x)
+var(x)
+
+
+#2(b)
+
+x = rnorm(200, mean = 0, sd = 1); x;
+(length(x[(abs(x)<2)]))/200
+pnorm(2, 0, 1) - pnorm(-2, 0, 1)
+
+
+
+
+
+
+
+
+
+
+
+#3
+
+x=c(0.45, -0.22, 0.71, 0.3, -0.15, 0.6, 0.38, -0.12, 0.55, 0.2)
+n = length(x)
+
+#MME
+mean(x)
+
+#MLE
+mle = mean(x)
+
+#unbiased (MSE = MLE)
+#E(mean) = mu; that indicates unbiased
+
+#Variance of the estimator
+var(x)/n
+
+#CI
+lower = mle - (2.57)*sqrt(var(x)/n)
+upper = mle + (2.57)*sqrt(var(x)/n)
+c(lower, upper)
+
+
+
+
+
+
+
+
+
+
+
+
+
+#4
+df = data.frame(
+	X=c(2, 3, 4, 5, 6, 7),
+	Y=c(3, 5, 6, 5, 7, 8)
+);
+df;
+
+X=c(2, 3, 4, 5, 6, 7);
+Y=c(3, 5, 6, 5, 7, 8);
+
+
+par(mfrow = c(1,1))
+plot(df[,1], df[,2], main = "Scatterplot") 
+
+
+r = cor(df[,1], df[,2]); r;
+
+model = lm(df[,1]~ df[,2])
+model;
+summary(model)$r.squared
+
+abline(x, y)
+
+predict(model, data.frame(X=8))
+
+plot(model$fitted.values, residuals(model), type = 'l')
