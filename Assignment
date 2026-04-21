@@ -34,3 +34,114 @@ ci_lower <- mle_mu - z_star * se
 ci_upper <- mle_mu + z_star * se
 cat("\n5. 95% Confidence Interval for mu:\n")
 cat("   [", ci_lower, ",", ci_upper, "]\n")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Question 2: Xi ~ N(mu, sigma^2), both unknown
+x <- c(0.61, -0.42, 0.73, 0.21, -0.19, 0.48, 0.36, -0.25)
+n <- length(x)
+
+# 1. MME of mu and sigma^2
+# mu: E[X] = mu  => mu_hat = x_bar
+# sigma^2: E[X^2] - mu^2 = sigma^2 => sigma^2_hat = (1/n)*sum((xi - x_bar)^2)
+mme_mu <- mean(x)
+mme_sigma2 <- mean((x - mme_mu)^2)
+cat("1. MME of mu =\n"); print(mme_mu)
+cat("   MME of sigma^2 =\n"); print(mme_sigma2)
+
+# 2. MLE of mu and sigma^2
+# MLE: mu_hat = x_bar, sigma^2_hat = (1/n)*sum((xi - x_bar)^2)
+mle_mu <- mean(x)
+mle_sigma2 <- mean((x - mle_mu)^2)
+cat("\n2. MLE of mu =\n"); print(mle_mu)
+cat("   MLE of sigma^2 =\n"); print(mle_sigma2)
+
+# 3. Unbiasedness:
+# X_bar is unbiased for mu.
+# MLE of sigma^2 is biased; unbiased estimator uses (n-1) denominator.
+s2_unbiased <- var(x)  # uses (n-1)
+cat("\n3. Unbiasedness Check:\n")
+cat("   mu_hat = X_bar is UNBIASED.\n")
+cat("   MLE sigma^2 (biased)  =\n"); print(mle_sigma2)
+cat("   Unbiased S^2 (n-1)    =\n"); print(s2_unbiased)
+
+# 4. MSE of variance estimator (MLE)
+# Bias of MLE variance = -sigma^2/n
+# MSE = Var(mle_sigma2) + Bias^2
+# For Normal: Var(S^2_mle) = 2*sigma^4*(n-1)/n^2  (approx using sample)
+sigma2_est <- s2_unbiased
+bias <- -sigma2_est / n
+var_mle <- 2 * sigma2_est^2 * (n-1) / n^2
+mse_sigma2 <- var_mle + bias^2
+cat("\n4. MSE of variance estimator =\n"); print(mse_sigma2)
+
+# 5. 95% CI for mu (sigma^2 unknown => t interval)
+t_star <- qt(0.975, df = n - 1)
+se <- sqrt(s2_unbiased / n)
+ci_lower <- mle_mu - t_star * se
+ci_upper <- mle_mu + t_star * se
+cat("\n5. 95% CI for mu (t-interval):\n")
+cat("   [", ci_lower, ",", ci_upper, "]\n")
+
+
+
+
+
+# Question 3: Xi ~ U(0, theta)
+x <- c(2.1, 3.4, 1.8, 4.2, 3.9, 2.7)
+n <- length(x)
+
+# 1. MME of theta
+# E[X] = theta/2 => theta_hat_MME = 2 * X_bar
+mme_theta <- 2 * mean(x)
+cat("1. MME of theta =\n"); print(mme_theta)
+
+# 2. MLE of theta
+# Likelihood maximized at theta = max(X_i)
+mle_theta <- max(x)
+cat("\n2. MLE of theta =\n"); print(mle_theta)
+
+# 3. Unbiasedness
+# MME: E[2*X_bar] = 2*theta/2 = theta => UNBIASED
+# MLE: E[X_(n)] = n*theta/(n+1) => BIASED (underestimates theta)
+# Unbiased version of MLE: ((n+1)/n) * X_(n)
+mle_unbiased <- ((n + 1) / n) * mle_theta
+cat("\n3. Unbiasedness:\n")
+cat("   MME is UNBIASED for theta.\n")
+cat("   MLE X_(n) is BIASED. Unbiased version = ((n+1)/n)*X_(n) =\n")
+print(mle_unbiased)
+
+# 4. MSE of estimators
+# MSE(MME) = Var(2*X_bar) = 4*Var(X_bar) = 4*(theta^2/12)/n = theta^2/(3n)
+# MSE(MLE) = E[(X_(n) - theta)^2] = 2*theta^2 / ((n+1)*(n+2))
+theta_est <- mle_unbiased  # use unbiased estimate as proxy
+mse_mme <- theta_est^2 / (3 * n)
+mse_mle <- 2 * theta_est^2 / ((n + 1) * (n + 2))
+cat("\n4. MSE:\n")
+cat("   MSE(MME) =\n"); print(mse_mme)
+cat("   MSE(MLE) =\n"); print(mse_mle)
+
+# 5. Consistency
+# Both estimators are consistent: as n->inf, MSE -> 0
+cat("\n5. Consistency:\n")
+cat("   Both MME and MLE are CONSISTENT (MSE -> 0 as n -> inf).\n")
+
+# 6. 95% CI for theta using unbiased MLE
+# X_(n) / theta ~ Beta(n, 1), but pivot: use approximate CI
+# Exact CI: [X_(n), X_(n) / alpha^(1/n)] where alpha = 0.05
+alpha <- 0.05
+ci_lower <- mle_theta
+ci_upper <- mle_theta / alpha^(1 / n)
+cat("\n6. 95% CI for theta (exact based on order statistic):\n")
+cat("   [", ci_lower, ",", ci_upper, "]\n")
