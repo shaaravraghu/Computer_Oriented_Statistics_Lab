@@ -198,3 +198,50 @@ cat("   Both MLE estimators are CONSISTENT.\n")
 
 
 
+# Question 4: Xi ~ U(a, b)
+x <- c(5.2, 6.1, 7.3, 5.9, 6.7, 7.0)
+n <- length(x)
+
+# 1. MME of a and b
+# E[X] = (a+b)/2, Var(X) = (b-a)^2/12
+# From moments: a_hat = X_bar - sqrt(3)*S, b_hat = X_bar + sqrt(3)*S
+xbar <- mean(x)
+s <- sd(x)
+mme_a <- xbar - sqrt(3) * s
+mme_b <- xbar + sqrt(3) * s
+cat("1. MME:\n")
+cat("   a_hat =\n"); print(mme_a)
+cat("   b_hat =\n"); print(mme_b)
+
+# 2. MLE of a and b
+# MLE: a_hat = X_(1) = min(x), b_hat = X_(n) = max(x)
+mle_a <- min(x)
+mle_b <- max(x)
+cat("\n2. MLE:\n")
+cat("   a_hat =\n"); print(mle_a)
+cat("   b_hat =\n"); print(mle_b)
+
+# 3. Unbiasedness
+# MLE estimators are biased. Unbiased versions:
+# a_hat_unbiased = X_(1) - (X_(n) - X_(1))/(n+1)  [wait - note below]
+# Actually: E[X_(1)] = a + (b-a)/(n+1), E[X_(n)] = b - (b-a)/(n+1)
+# => unbiased: a_u = X_(1) - (X_(n)-X_(1))/(n+1), b_u = X_(n) + (X_(n)-X_(1))/(n+1)
+range_hat <- mle_b - mle_a
+a_unbiased <- mle_a - range_hat / (n + 1)
+b_unbiased <- mle_b + range_hat / (n + 1)
+cat("\n3. Unbiasedness:\n")
+cat("   MLE a_hat and b_hat are BIASED.\n")
+cat("   Unbiased a =\n"); print(a_unbiased)
+cat("   Unbiased b =\n"); print(b_unbiased)
+
+# 4. MSE
+# Use approximate MSE for unbiased estimators (using sample range as proxy)
+# MSE(a_u) = MSE(b_u) = (b-a)^2 / (n^2 + 2n)  [approx]
+range_true_est <- b_unbiased - a_unbiased
+mse <- range_true_est^2 / (n * (n + 2))
+cat("\n4. Approximate MSE of a_hat and b_hat =\n"); print(mse)
+
+# 5. Consistency
+cat("\n5. Consistency:\n")
+cat("   X_(1) -> a and X_(n) -> b as n -> inf.\n")
+cat("   Both MLE estimators are CONSISTENT.\n")
