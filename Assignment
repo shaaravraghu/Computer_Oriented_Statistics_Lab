@@ -1,0 +1,36 @@
+# Question 1: Xi ~ N(mu, sigma^2), sigma^2 known
+# Daily returns data
+x <- c(0.45, -0.28, 0.62, 0.15, -0.35, 0.71, 0.33, -0.12, 0.58, 0.27)
+n <- length(x)
+sigma2 <- 0.1  # assumed known variance (adjust as needed)
+
+# 1. Method of Moments Estimator (MME) of mu
+# E[X] = mu => mu_hat = x_bar
+mme_mu <- mean(x)
+cat("1. MME of mu =\n")
+print(mme_mu)
+
+# 2. Maximum Likelihood Estimator (MLE) of mu
+# For N(mu, sigma^2), MLE of mu = x_bar
+mle_mu <- mean(x)
+cat("\n2. MLE of mu =\n")
+print(mle_mu)
+
+# 3. Check Unbiasedness: E[X_bar] = mu => unbiased
+# Bias = E[estimator] - mu = 0 (theoretical)
+cat("\n3. Unbiasedness Check:\n")
+cat("   E[X_bar] = mu (by definition), so X_bar is an UNBIASED estimator of mu.\n")
+
+# 4. MSE of estimator of mu
+# MSE(X_bar) = Var(X_bar) = sigma^2 / n  (since it is unbiased, MSE = Variance)
+mse_mu <- sigma2 / n
+cat("\n4. MSE of estimator of mu =\n")
+print(mse_mu)
+
+# 5. 95% Confidence Interval for mu (sigma^2 known => Z interval)
+z_star <- qnorm(0.975)
+se <- sqrt(sigma2 / n)
+ci_lower <- mle_mu - z_star * se
+ci_upper <- mle_mu + z_star * se
+cat("\n5. 95% Confidence Interval for mu:\n")
+cat("   [", ci_lower, ",", ci_upper, "]\n")
