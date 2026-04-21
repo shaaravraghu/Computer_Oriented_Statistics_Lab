@@ -245,3 +245,30 @@ cat("\n4. Approximate MSE of a_hat and b_hat =\n"); print(mse)
 cat("\n5. Consistency:\n")
 cat("   X_(1) -> a and X_(n) -> b as n -> inf.\n")
 cat("   Both MLE estimators are CONSISTENT.\n")
+
+
+
+# Question 5: Xi ~ N(mu, sigma^2), sigma^2 = 0.16 known
+x <- c(0.33, -0.21, 0.55, 0.14, -0.29, 0.68, 0.25, -0.17, 0.49)
+n <- length(x)
+sigma2 <- 0.16
+
+# 1. MLE of mu
+mle_mu <- mean(x)
+cat("1. MLE of mu =\n"); print(mle_mu)
+
+# 2. Unbiasedness
+cat("\n2. Unbiasedness:\n")
+cat("   X_bar is UNBIASED for mu (E[X_bar] = mu).\n")
+
+# 3. MSE = Var(X_bar) = sigma^2 / n (since unbiased, MSE = Variance)
+mse <- sigma2 / n
+cat("\n3. MSE of mu_hat =\n"); print(mse)
+
+# 4. 99% CI for mu (sigma^2 known => Z interval)
+z_star <- qnorm(0.995)
+se <- sqrt(sigma2 / n)
+ci_lower <- mle_mu - z_star * se
+ci_upper <- mle_mu + z_star * se
+cat("\n4. 99% CI for mu:\n")
+cat("   [", ci_lower, ",", ci_upper, "]\n")
