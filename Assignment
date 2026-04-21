@@ -348,3 +348,48 @@ cat("   Approximate MSE of theta_hat =\n"); print(mse_approx)
 
 
 
+# Question 7: Chi-square distribution with 5 df
+set.seed(42)
+
+# 1. Generate 1000 random samples from Chi-sq(5)
+samples <- rchisq(1000, df = 5)
+
+# 2 & 3. Histogram with theoretical density superimposed
+hist(samples,
+     breaks = 30,
+     freq = FALSE,
+     main = "Chi-Square(5): Simulated vs Theoretical",
+     xlab = "X",
+     col = "lightblue",
+     border = "white")
+curve(dchisq(x, df = 5), add = TRUE, col = "red", lwd = 2)
+legend("topright", legend = c("Simulated", "Theoretical"),
+       fill = c("lightblue", NA), lty = c(NA, 1), col = c(NA, "red"), lwd = c(NA, 2))
+
+# 4. P(X > 10)
+prob_theoretical <- pchisq(10, df = 5, lower.tail = FALSE)
+prob_simulated <- mean(samples > 10)
+cat("4. P(X > 10) Theoretical =\n"); print(prob_theoretical)
+cat("   P(X > 10) Simulated   =\n"); print(prob_simulated)
+
+# 5(a). X1 ~ chi^2(3), X2 ~ chi^2(2) => X1+X2 ~ chi^2(5)
+cat("\n5(a). X1 + X2 ~ chi^2(3+2) = chi^2(5)\n")
+
+# 5(b). Verify via simulation
+x1 <- rchisq(1000, df = 3)
+x2 <- rchisq(1000, df = 2)
+sum_sim <- x1 + x2
+
+hist(sum_sim,
+     breaks = 30,
+     freq = FALSE,
+     main = "X1+X2 vs chi^2(5) Theoretical",
+     xlab = "X1+X2",
+     col = "lightgreen",
+     border = "white")
+curve(dchisq(x, df = 5), add = TRUE, col = "red", lwd = 2)
+
+# 6. Interpretation
+cat("\n6. Interpretation:\n")
+cat("   P(X>10) ~= 0.067: about 6.7% chance of exceeding 10.\n")
+cat("   Simulation confirms the additive property: X1+X2 ~ chi^2(5).\n")
