@@ -272,3 +272,79 @@ ci_lower <- mle_mu - z_star * se
 ci_upper <- mle_mu + z_star * se
 cat("\n4. 99% CI for mu:\n")
 cat("   [", ci_lower, ",", ci_upper, "]\n")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Question 6: Assumed Exponential distribution (mean = 1/theta)
+# Data
+x <- c(1.5, 2.8, 3.2, 4.1, 2.6, 3.7, 4.5, 3.9, 2.3, 3.0, 4.2, 3.4)
+n <- length(x)
+
+# 1. MME and MLE of theta (rate parameter of Exponential)
+# E[X] = 1/theta => theta_hat = 1/X_bar (both MME and MLE)
+mme_theta <- 1 / mean(x)
+mle_theta <- 1 / mean(x)
+cat("1. MME of theta =\n"); print(mme_theta)
+cat("   MLE of theta =\n"); print(mle_theta)
+
+# 2. Compare estimators
+cat("\n2. Comparison:\n")
+cat("   Both MME and MLE give the same estimator: 1/X_bar.\n")
+
+# 3. Consistency
+cat("\n3. Consistency:\n")
+cat("   1/X_bar is consistent since X_bar -> 1/theta by LLN.\n")
+
+# 4. Bias and MSE
+# E[1/X_bar] != theta exactly (Jensen's inequality - biased)
+# For large n: Bias ~ theta/n, MSE ~ theta^2*(n+1)/n^2 (approx)
+bias_approx <- mle_theta / n
+mse_approx <- mle_theta^2 * (n + 1) / n^2
+cat("\n4. Approximate Bias of theta_hat =\n"); print(bias_approx)
+cat("   Approximate MSE of theta_hat =\n"); print(mse_approx)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
