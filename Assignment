@@ -748,3 +748,42 @@ cat("Real roots in 10 trials:", real_root_count, "/ 10\n")
 
 
 
+# Question 14 (and 19): Exponential distribution sampling study
+set.seed(42)
+
+simulate_sampling <- function(n, R) {
+  sample_means <- numeric(R)
+  sample_vars  <- numeric(R)
+  for (i in 1:R) {
+    s <- rexp(n, rate = 1)
+    sample_means[i] <- mean(s)
+    sample_vars[i]  <- var(s)
+  }
+
+  cat("\n--- n =", n, ", R =", R, "---\n")
+  cat("Mean of sample means     =\n"); print(mean(sample_means))
+  cat("Variance of sample means =\n"); print(var(sample_means))
+  cat("Mean of sample variances     =\n"); print(mean(sample_vars))
+  cat("Variance of sample variances =\n"); print(var(sample_vars))
+
+  # Histogram of sample means
+  hist(sample_means,
+       breaks = 30,
+       freq = FALSE,
+       main = paste("Sample Means: n =", n, ", R =", R),
+       xlab = "Sample Mean",
+       col = "lightblue",
+       border = "white")
+  curve(dnorm(x, mean = 1, sd = sqrt(1/n)),
+        add = TRUE, col = "red", lwd = 2)
+}
+
+# Case 1
+simulate_sampling(n = 15,  R = 30)
+
+# Case 2 variants
+simulate_sampling(n = 60,  R = 100)
+simulate_sampling(n = 120, R = 200)
+
+cat("\nObservation: As n increases, sample means cluster more tightly\n")
+cat("around the true mean=1 and the histogram approaches Normal.\n")
