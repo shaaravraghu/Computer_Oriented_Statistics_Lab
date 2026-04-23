@@ -979,3 +979,61 @@ cat("\n(b) From 200 N(0,1) observations:\n")
 cat("    Simulated  P(|Z| > 2) =\n"); print(p_sim)
 cat("    Theoretical P(|Z| > 2) =\n"); print(p_theo)
 cat("    Comparison: Simulated value is close to theoretical ~0.0455.\n")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Question 18: Random Quadratic Equation
+# p, q, r ~ N(0,1); form px^2 + qx + r = 0
+
+set.seed(123)
+
+# (a) & (b): Form the equation and compute discriminant for one instance
+p_coef <- rnorm(1)
+q_coef <- rnorm(1)
+r_coef <- rnorm(1)
+disc <- q_coef^2 - 4 * p_coef * r_coef
+
+cat("(a) Quadratic: (", round(p_coef,3), ")x^2 + (",
+    round(q_coef,3), ")x + (", round(r_coef,3), ") = 0\n")
+cat("(b) Discriminant D = q^2 - 4pr =\n"); print(disc)
+
+nature <- ifelse(disc > 0, "Real and Distinct roots",
+           ifelse(disc == 0, "Real and Equal roots", "Complex (no real) roots"))
+cat("    Nature of roots:", nature, "\n")
+
+# (c): Repeat 10 times, count real roots
+cat("\n(c) 10 Trials:\n")
+cat(sprintf("%-8s %-8s %-8s %-12s %-25s\n",
+        "Trial", "p", "q", "D", "Nature"))
+
+real_count <- 0
+for (i in 1:10) {
+  p_i <- rnorm(1)
+  q_i <- rnorm(1)
+  r_i <- rnorm(1)
+  D   <- q_i^2 - 4 * p_i * r_i
+  nat <- ifelse(D > 0, "Real & Distinct",
+         ifelse(D == 0, "Real & Equal",   "Complex"))
+  if (D >= 0) real_count <- real_count + 1
+  cat(sprintf("%-8d %-8.3f %-8.3f %-12.4f %-25s\n", i, p_i, q_i, D, nat))
+}
+
+cat("\nReal roots occurred in", real_count, "out of 10 trials.\n")
+cat("Comment: Theoretically, P(D >= 0) = P(q^2 >= 4pr) ~ 0.5\n")
+cat("         since p,q,r are iid N(0,1). Real roots occur roughly half the time.\n")
