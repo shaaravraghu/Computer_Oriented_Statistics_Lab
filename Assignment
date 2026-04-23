@@ -1037,3 +1037,86 @@ for (i in 1:10) {
 cat("\nReal roots occurred in", real_count, "out of 10 trials.\n")
 cat("Comment: Theoretically, P(D >= 0) = P(q^2 >= 4pr) ~ 0.5\n")
 cat("         since p,q,r are iid N(0,1). Real roots occur roughly half the time.\n")
+
+
+
+
+
+
+
+
+
+
+
+# Question 19: Sampling distribution study
+# Distribution: Exponential with rate 1 (mean = 1, variance = 1)
+# Change rexp() to your required distribution if different
+
+set.seed(42)
+
+run_study <- function(n, R) {
+  sample_means <- numeric(R)
+  sample_vars  <- numeric(R)
+
+  for (i in 1:R) {
+    s               <- rexp(n, rate = 1)
+    sample_means[i] <- mean(s)
+    sample_vars[i]  <- var(s)
+  }
+
+  cat("\n==============================\n")
+  cat("n =", n, "| R =", R, "\n")
+  cat("==============================\n")
+
+  # (a) Mean and variance of sample means
+  cat("(a) Mean of sample means     =\n"); print(mean(sample_means))
+  cat("    Variance of sample means =\n"); print(var(sample_means))
+  cat("    [Theoretical: mean=1, variance=1/n =", round(1/n,4), "]\n")
+
+  # (b) Mean and variance of sample variances
+  cat("\n(b) Mean of sample variances     =\n"); print(mean(sample_vars))
+  cat("    Variance of sample variances =\n"); print(var(sample_vars))
+  cat("    [Theoretical mean of S^2 = sigma^2 = 1 (unbiased)]\n")
+
+  # (c) Histogram of sample means
+  hist(sample_means,
+       breaks = 30,
+       freq   = FALSE,
+       main   = paste("Sample Means | n =", n, ", R =", R),
+       xlab   = "Sample Mean",
+       col    = "lightblue",
+       border = "white")
+  curve(dnorm(x, mean = 1, sd = sqrt(1/n)),
+        add = TRUE, col = "red", lwd = 2)
+  legend("topright", legend = c("Sample Means", "N(1, 1/n)"),
+         fill = c("lightblue", NA),
+         lty  = c(NA, 1), col = c(NA, "red"), lwd = c(NA, 2))
+  cat("\n(c) Histogram of sample means: shape becomes more Normal as n increases.\n")
+
+  # (d) Histogram of sample variances
+  hist(sample_vars,
+       breaks = 30,
+       freq   = FALSE,
+       main   = paste("Sample Variances | n =", n, ", R =", R),
+       xlab   = "Sample Variance",
+       col    = "lightyellow",
+       border = "white")
+  cat("(d) Histogram of sample variances: right-skewed for small n,\n")
+  cat("    becomes more symmetric and concentrated as n increases.\n")
+}
+
+# Base case
+run_study(n = 15,  R = 30)
+
+# (i)
+run_study(n = 60,  R = 100)
+
+# (ii)
+run_study(n = 120, R = 200)
+
+cat("\nOverall Observation:\n")
+cat("As n and R increase:\n")
+cat("  - Sample means concentrate tightly around the true mean (=1).\n")
+cat("  - Variance of sample means decreases (= 1/n -> 0).\n")
+cat("  - Histogram of means approaches Normal curve (CLT).\n")
+cat("  - Variance estimator S^2 becomes more stable (less spread).\n")
