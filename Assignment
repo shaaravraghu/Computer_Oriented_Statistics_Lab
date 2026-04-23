@@ -787,3 +787,164 @@ simulate_sampling(n = 120, R = 200)
 
 cat("\nObservation: As n increases, sample means cluster more tightly\n")
 cat("around the true mean=1 and the histogram approaches Normal.\n")
+
+
+
+
+
+
+
+
+
+
+
+# Question 15: Simulated regression
+set.seed(42)
+
+# 1. Generate data
+n <- 100
+X <- rnorm(n)
+eps <- rnorm(n)
+Y <- 2 * X + eps
+
+# 2. Compute correlation
+r <- cor(X, Y)
+cat("2. Correlation between X and Y =\n"); print(r)
+
+# 3. Fit regression model
+model <- lm(Y ~ X)
+cat("\n3. Regression Summary:\n")
+print(summary(model))
+
+# 4. Compare theoretical vs estimated slope
+cat("\n4. Theoretical slope  = 2\n")
+cat("   Estimated slope    =\n")
+print(coef(model)["X"])
+cat("   (Should be close to 2; difference is due to sampling variability.)\n")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Question 16: Linear Regression on given data
+# X = (2,4,6,8,10,12), Y = (3,6,7,11,14,18)
+
+X <- c(2, 4, 6, 8, 10, 12)
+Y <- c(3, 6, 7, 11, 14, 18)
+
+# (i) Scatter diagram
+plot(X, Y,
+     main = "Scatter Plot: X vs Y",
+     xlab = "X", ylab = "Y",
+     pch = 19, col = "blue")
+abline(lm(Y ~ X), col = "red", lwd = 2)
+cat("(i) Relationship: LINEAR and POSITIVE — Y increases as X increases.\n")
+
+# (ii) Pearson correlation coefficient
+r <- cor(X, Y)
+cat("\n(ii) Pearson correlation r =\n"); print(r)
+cat("     Interpretation: Very strong positive linear association.\n")
+
+# (iii) Fit linear model Y = beta0 + beta1*X
+model <- lm(Y ~ X)
+cat("\n(iii) Linear Model Summary:\n")
+print(summary(model))
+beta0 <- coef(model)[1]
+beta1 <- coef(model)[2]
+cat("      Estimated equation: Y =", round(beta0, 4), "+", round(beta1, 4), "* X\n")
+
+# (iv) R-squared
+R2 <- summary(model)$r.squared
+cat("\n(iv) R^2 =\n"); print(R2)
+cat("     Model explains", round(R2 * 100, 2), "% of the variability in Y.\n")
+
+# (v) Compare r^2 with R^2
+cat("\n(v) r^2 =\n"); print(r^2)
+cat("    R^2 =\n"); print(R2)
+cat("    For simple linear regression, r^2 = R^2 exactly.\n")
+
+# (vi) Residuals vs Fitted plot
+plot(fitted(model), resid(model),
+     main = "Residuals vs Fitted Values",
+     xlab = "Fitted Values",
+     ylab = "Residuals",
+     pch = 19, col = "darkred")
+abline(h = 0, lty = 2, col = "gray")
+cat("\n(vi) Check for random scatter around 0 (linearity OK) and\n")
+cat("     constant spread across fitted values (homoscedasticity).\n")
+
+# (vii) Predict Y when X = 15
+y_pred <- predict(model, newdata = data.frame(X = 15))
+cat("\n(vii) Predicted Y when X = 15:\n"); print(y_pred)
+cat("      When X increases to 15 units, estimated Y =", round(y_pred, 4), "\n")
+
+# (viii) Interpret beta1 as market beta
+cat("\n(viii) beta1 (market beta) =\n"); print(beta1)
+if (beta1 > 1) {
+  cat("       beta1 > 1 => AGGRESSIVE stock: amplifies market movement.\n")
+} else if (beta1 < 1) {
+  cat("       beta1 < 1 => DEFENSIVE stock: dampens market movement.\n")
+} else {
+  cat("       beta1 = 1 => Moves exactly with the market.\n")
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
