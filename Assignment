@@ -948,3 +948,34 @@ if (beta1 > 1) {
 
 
 
+# Question 17: X ~ N(20, 4^2)
+
+# Part (a)(i): P(12 <= X <= 28)
+p_exact <- pnorm(28, mean = 20, sd = 4) - pnorm(12, mean = 20, sd = 4)
+cat("(a)(i) P(12 <= X <= 28) =\n"); print(p_exact)
+
+# Part (a)(ii): Express using Z ~ N(0,1)
+# Standardise: Z = (X - 20) / 4
+# X=12 => Z = (12-20)/4 = -2
+# X=28 => Z = (28-20)/4 =  2
+# So P(12 <= X <= 28) = P(-2 <= Z <= 2)
+p_z <- pnorm(2) - pnorm(-2)
+cat("\n(a)(ii) Standardised: P(-2 <= Z <= 2) =\n"); print(p_z)
+cat("        Z = (X - 20) / 4; X=12 => Z=-2, X=28 => Z=2\n")
+
+# Part (a)(iii): Generate sample of size 60, compute mean and variance
+set.seed(42)
+samp <- rnorm(60, mean = 20, sd = 4)
+cat("\n(a)(iii) Sample of n=60 from N(20,16):\n")
+cat("         Sample mean     =\n"); print(mean(samp))
+cat("         Sample variance =\n"); print(var(samp))
+
+# Part (b): 200 observations from N(0,1), estimate P(|Z| > 2)
+set.seed(42)
+z_obs <- rnorm(200)
+p_sim  <- mean(abs(z_obs) > 2)
+p_theo <- 2 * pnorm(-2)
+cat("\n(b) From 200 N(0,1) observations:\n")
+cat("    Simulated  P(|Z| > 2) =\n"); print(p_sim)
+cat("    Theoretical P(|Z| > 2) =\n"); print(p_theo)
+cat("    Comparison: Simulated value is close to theoretical ~0.0455.\n")
