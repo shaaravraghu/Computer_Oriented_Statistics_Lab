@@ -601,3 +601,150 @@ if (beta1 > 1) {
 } else {
   cat("   beta1 < 1 => DEFENSIVE stock (dampens market moves).\n")
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Question 13 (and 17): X ~ N(20, 4^2)
+
+# Part (a)
+# 1. P(12 <= X <= 28)
+p_exact <- pnorm(28, mean = 20, sd = 4) - pnorm(12, mean = 20, sd = 4)
+cat("(a)1. P(12 <= X <= 28) =\n"); print(p_exact)
+
+# 2. In terms of Z ~ N(0,1)
+# Z = (X - 20)/4; P(-2 <= Z <= 2)
+p_z <- pnorm(2) - pnorm(-2)
+cat("\n(a)2. P(-2 <= Z <= 2) =\n"); print(p_z)
+cat("   (Standardize: Z = (X-20)/4, so X=12 => Z=-2, X=28 => Z=2)\n")
+
+# 3. Sample of size 60
+set.seed(42)
+samp <- rnorm(60, mean = 20, sd = 4)
+cat("\n(a)3. Sample mean     =\n"); print(mean(samp))
+cat("      Sample variance =\n"); print(var(samp))
+
+# Part (b): 200 obs from N(0,1), estimate P(|Z|>2)
+z_obs <- rnorm(200)
+p_sim <- mean(abs(z_obs) > 2)
+p_theo <- 2 * pnorm(-2)
+cat("\n(b) Estimated P(|Z|>2) =\n"); print(p_sim)
+cat("    Theoretical P(|Z|>2) =\n"); print(p_theo)
+
+########################################
+# Question 13 Part 3 / Question 18: Random Quadratic Equation
+# p, q, r ~ N(0,1); px^2 + qx + r = 0
+set.seed(123)
+cat("\n--- Random Quadratic Equation ---\n")
+real_root_count <- 0
+
+for (i in 1:10) {
+  p <- rnorm(1); q <- rnorm(1); r <- rnorm(1)
+  disc <- q^2 - 4 * p * r
+  nature <- ifelse(disc > 0, "Real & Distinct",
+                ifelse(disc == 0, "Real & Equal", "Complex"))
+  if (disc >= 0) real_root_count <- real_root_count + 1
+  cat("Trial", i, ": D =", round(disc, 3), "=>", nature, "\n")
+}
+cat("Real roots in 10 trials:", real_root_count, "/ 10\n")
+
+
+
+
+
+
+
+
+# Question 13 (and 17): X ~ N(20, 4^2)
+
+# Part (a)
+# 1. P(12 <= X <= 28)
+p_exact <- pnorm(28, mean = 20, sd = 4) - pnorm(12, mean = 20, sd = 4)
+cat("(a)1. P(12 <= X <= 28) =\n"); print(p_exact)
+
+# 2. In terms of Z ~ N(0,1)
+# Z = (X - 20)/4; P(-2 <= Z <= 2)
+p_z <- pnorm(2) - pnorm(-2)
+cat("\n(a)2. P(-2 <= Z <= 2) =\n"); print(p_z)
+cat("   (Standardize: Z = (X-20)/4, so X=12 => Z=-2, X=28 => Z=2)\n")
+
+# 3. Sample of size 60
+set.seed(42)
+samp <- rnorm(60, mean = 20, sd = 4)
+cat("\n(a)3. Sample mean     =\n"); print(mean(samp))
+cat("      Sample variance =\n"); print(var(samp))
+
+# Part (b): 200 obs from N(0,1), estimate P(|Z|>2)
+z_obs <- rnorm(200)
+p_sim <- mean(abs(z_obs) > 2)
+p_theo <- 2 * pnorm(-2)
+cat("\n(b) Estimated P(|Z|>2) =\n"); print(p_sim)
+cat("    Theoretical P(|Z|>2) =\n"); print(p_theo)
+
+########################################
+# Question 13 Part 3 / Question 18: Random Quadratic Equation
+# p, q, r ~ N(0,1); px^2 + qx + r = 0
+set.seed(123)
+cat("\n--- Random Quadratic Equation ---\n")
+real_root_count <- 0
+
+for (i in 1:10) {
+  p <- rnorm(1); q <- rnorm(1); r <- rnorm(1)
+  disc <- q^2 - 4 * p * r
+  nature <- ifelse(disc > 0, "Real & Distinct",
+                ifelse(disc == 0, "Real & Equal", "Complex"))
+  if (disc >= 0) real_root_count <- real_root_count + 1
+  cat("Trial", i, ": D =", round(disc, 3), "=>", nature, "\n")
+}
+cat("Real roots in 10 trials:", real_root_count, "/ 10\n")
+
+
+
+
+
+
+
+
